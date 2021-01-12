@@ -2,7 +2,6 @@ dependencies:
   '@mdx-js/loader': 1.6.22_react@17.0.1
   '@mdx-js/react': 1.6.22_react@17.0.1
   '@next/mdx': 10.0.5_f56c41adb6190c4680be4a1c0222355d
-  focus-visible: 5.2.0
   next: 10.0.5_c39e9db791ea05e3ec4e0e74abb7a6b5
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
@@ -1903,10 +1902,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3Z4XhFZ3992uIq0XOqb9AreonueSYphE6oYbpt5+3u06JWklbsPkNv3ZKkP9Bz/r+1MWCaMoSQ28P85+1Yc77w==
-  /focus-visible/5.2.0:
-    dev: false
-    resolution:
-      integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==
   /for-in/1.0.2:
     dev: false
     engines:
@@ -4810,7 +4805,6 @@ specifiers:
   '@next/mdx': ^10.0.5
   '@types/node': ^14.14.20
   '@types/react': ^17.0.0
-  focus-visible: ^5.2.0
   next: 10.0.5
   react: 17.0.1
   react-dom: 17.0.1
