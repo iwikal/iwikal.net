@@ -94,6 +94,7 @@ body {
 }
 
 .column {
+  flex: 1;
   max-width: 82ex;
   min-height: 100%;
   display: flex;
@@ -129,7 +130,6 @@ a:hover {
 }
 
 nav {
-  width: 100%;
   transition: var(--color-transition);
   background: var(--hl);
   color: var(--emph);
