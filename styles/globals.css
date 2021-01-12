@@ -45,7 +45,7 @@ label[for=darkmode] {
   user-select: none;
   cursor: pointer;
   padding: 10px;
-  align-self: end;
+  align-self: flex-end;
   color: var(--accent);
 }
 
