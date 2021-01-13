@@ -162,4 +162,5 @@ nav a.current {
 footer {
   height: 3em;
   background: var(--hl);
+  transition: var(--color-transition);
 }
