@@ -15,11 +15,12 @@ function App({ Component, pageProps }: AppProps) {
           <nav>
             <NavLink href="/">Start</NavLink>
             <NavLink href="/blog">Blog</NavLink>
+            <label htmlFor="darkmode">Darkmode</label>
           </nav>
           <main>
             <Component {...pageProps} />
           </main>
-          <label htmlFor="darkmode">Toggle darkmode</label>
+          <footer />
         </div>
       </div>
     </>

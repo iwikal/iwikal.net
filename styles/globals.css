@@ -44,9 +44,15 @@ label[for=darkmode] {
   background: var(--hl);
   user-select: none;
   cursor: pointer;
-  padding: 10px;
+  padding: 1em;
   align-self: flex-end;
+  margin-left: auto;
   color: var(--accent);
+}
+
+label[for=darkmode]:focus,
+label[for=darkmode]:hover {
+  font-weight: 600;
 }
 
 label[for=darkmode]:active {
@@ -151,4 +157,9 @@ nav a.current {
   
   color: var(--comment);
   background: var(--bg);
+}
+
+footer {
+  height: 3em;
+  background: var(--hl);
 }
