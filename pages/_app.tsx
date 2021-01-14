@@ -2,6 +2,15 @@ import Head from 'next/head'
 import NavLink from '../components/NavLink'
 import '../styles/globals.css'
 import { AppProps } from 'next/app'
+import { MDXProvider } from '@mdx-js/react'
+
+const components = {
+  code: (props: React.PropsWithChildren<{}>) => (
+    <code>
+      <blockquote {...props} />
+    </code>
+  ),
+}
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +27,9 @@ function App({ Component, pageProps }: AppProps) {
             <label htmlFor="darkmode">Darkmode</label>
           </nav>
           <main>
-            <Component {...pageProps} />
+            <MDXProvider components={components}>
+              <Component {...pageProps} />
+            </MDXProvider>
           </main>
           <footer />
         </div>
