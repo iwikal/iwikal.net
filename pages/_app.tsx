@@ -10,6 +10,9 @@ const components = {
       <blockquote {...props} />
     </code>
   ),
+  inlineCode: (props: React.PropsWithChildren<{}>) => (
+    <code className="inline" {...props} />
+  ),
 }
 
 function App({ Component, pageProps }: AppProps) {

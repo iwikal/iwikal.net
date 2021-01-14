@@ -101,7 +101,7 @@ body {
 
 .column {
   flex: 1;
-  max-width: 82ex;
+  max-width: 82ch;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -109,11 +109,16 @@ body {
 
 main {
   flex: 1;
-  margin: 0 1ex;
+  margin: 0 1ch;
 }
 
 h1 {
   color: var(--accent);
+}
+
+code.inline {
+  background: var(--hl);
+  border-radius: 5px;
 }
 
 code blockquote {
