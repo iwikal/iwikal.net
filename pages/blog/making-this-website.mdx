@@ -1,0 +1,279 @@
+# Making this website - a premortem
+
+It's clearly not finished. There's a lot of things I want to deal with at some
+point: saving your color theme setting is the first that comes to mind. I have
+some ideas of how to do that in a javascript-free way, most of them involving
+cookies or localstorage. I just have to consider the legal and performance
+related implications first. The listing of blog posts could also bear to look a
+lot nicer, and I want to get some syntax highligting in my code snippets. But
+it's up! It's the first website I've made and deployed outside of work. I can
+properly consider myself a citizen of the web now.
+
+## Why?
+
+Well, I started thinking about getting a personal website like this a long time
+ago. Besides the fact that I like making websites, I buy into the idea that
+this is something everyone should have, ideally, instead of resorting to
+hosting your ideas and showing off pictures you're proud of on giant social
+media platforms that control what you see and manipulate the timelines to
+maximise... who knows what they're trying to maximise. Through pursuing these
+hidden motives though, they end up causing some pretty bad stuff on their
+platforms: promoting heated arguments and polarising opinions, encouraging the
+most outrage possible, because that's what people engage with. Much like
+tabloids, except they get to waive all responsibility for fact-checking and
+journalistic ethics because they didn't write the sensationalist headlines
+themselves. Even tabloids would probably draw the line at breeding violent
+extremism. I want no part of it and that's why I'm here instead of on facebook
+or twitter.
+
+## How?
+
+About a year ago, I stumbled across a framework called
+[react-static](http://react-static.js.org). I read about it, and saw that it built
+upon ideas from something called next.js, but focused in more on the static
+generation use case. If you're unfamiliar, static site generation (SSG) is when
+you have some tool you run that takes arbitrary data, and compiles it into a
+bunch of html, js, css, and potential other files, all bundled in a directory
+that is ready to serve with a regular webserver like apache or nginx, as
+opposed to rendering the whole page on some server each time a client requests
+the page (that's SSR - server side rendering) like PHP typically does, or even
+rendering it on the client with javascript after they have received the
+response (client side rendering, or CSR). Many SSG frameworks these days
+combine SSG with CSR that kicks in after the page has loaded, and takes care of
+rendering the rest of the site once the user starts interacting and navigating
+around. Spoiler - that's the approach used by this site.
+
+Static generation is especially well suited for blogs, since the site's content
+rarely changes, and so it would be wasteful to render it on every request, when
+I can just render my whole site ahead of time, once per every new blog post. I
+hope it won't be too rare an occation though. I'll try to make a habit of
+posting here every once in a while. Inspired by this newly discovered
+technology, I started experimenting with using it. I was impressed at how it
+combined the power of classical static site generation with the expressiveness
+and flexibility of react, which I had been using professionaly for some time to
+make more involved interactive webapps that would have had no benefit from
+being prerendered.
+
+Due to reasons I can't quite remember, I decided react-static wasn't quite what
+I had hoped it would be, so I decided to check out that
+[next.js](https://nextjs.org) thing it was inspired by. I was equally impressed
+by it, this time because of how easy to use and intuitive it was (when used in
+the way they want you to). But the gripes listed by the developers of
+react-static were there. It simply wasn't a first priority to target fully
+static sites, instead next.js focused on a hybrid between SSR and CSR. Also, I
+was a little deterred by how they really push you towards using their hosting
+solution. I just wanted a static site. Half the point of having a static site
+is that it can be hosted anywhere, by any webserver.
+
+Who are _they_, you ask?
+
+next.js was and is developed by a company then called Zeit, now rebranded as
+Vercel. They provide hosting and deployment services for serverless sites and
+webapps. They promise fast load times courtesy of edge node hosting and smart
+caching defaults, and easy deployment through their git integrations. I wasn't
+particularily interested. There are many companies that provide these services
+and I wasn't keen on picking one based on how well they had integrated their
+marketing in an open source tool. I shopped around a bit, leaning towards using
+Firebase unless I found something better, but at this point I kind of lost
+interest in this project.
+
+## The plague
+
+Fast forward to 2021. Covid has made my time at university a bit less exciting
+than I had anticipated. Pretty much all extracurricular activities are
+canceled. I never see my classmates. It's all Zoom and Sharepoint and poring
+over books all day long. Boredom finally sets in, and I begin to miss working
+in the web field, so I decide to revisit this project. Now, next.js has
+released version 10, and i discover _they_ have really delivered on the SSG
+front. This time, next.js does exactly what I want it to do: take the markdown
+I commit right into the source tree, and turn it into blog posts, statically,
+and it can even generate a static list of all blog posts for the menu page
+which was one of the things I couldn't figure out a year ago.
+
+I've also been interested in using Cloudflare's WASM workers for something for
+a while, if nothing else than to have an excuse for writing Rust. I figured I
+could use them to host the site, but upon discovering that
+[wrangler](https://github.com/cloudflare/wrangler), the tool they provide for
+deploying and managing your workers, was broken in more ways than one I just
+gave up and deployed the site to Vercel, and that's how you're reading this
+now. Fortunately, for a personal website like this, the bill comes down to the
+very affordable amount of 0. I just pay $9.95 per year to Cloudflare for the
+domain name. So after that essay on the history behind the site, let's get into
+what makes it tick.
+
+## The code
+
+One benefit that SSG and SSR both bring, is that you don't need to run any
+javascript at all to see the resulting website. It's passed in a
+ready-to-display state over the wire as html and css along with whatever images
+and other assets you throw in there. There's a small but adamant group of
+people that refuse to run any javascript whatsoever on their computers. I
+thought it would be an interesting challenge to see how well I could adhere to
+these demands while simultaneously making the blog exactly what I would want
+from a blog. That isn't to say a lot, but client side routing is nice to have
+in my mind. Smartphones have not-insignificant network latency, and it really
+makes a difference if the device itself has what it needs to render a page
+before you navigate to it, instead of making a request and waiting for the
+response. I also appreciate any text-focused website that provides a dark mode
+for tired eyes. next.js takes care of client side routing for me, in a way that
+doesn't interfere with the experience of noscript users, but what about dark
+mode? This was a great excuse for me to brush up my css skills. I had the idea
+to use a checkbox element, which would serve as the toggle button, and then
+apply some css selector that replaces css variables used by all other elements
+to choose their colors.
+
+```css
+#root {
+  --background: white;
+  --foreground: black;
+}
+
+#darkmode:checked :root {
+  --background: black;
+  --foreground: white;
+}
+```
+
+There's just one problem with this code though: the checkbox has to be inside
+the root, not the other way around. And there's no way in css to style a parent
+element on the condition of some state on a child element. So I came up with
+putting a hidden checkbox as far up the tree as I could reach, and used a label
+in the header menu to act as a stand in for the button itself. It's a hack and
+it's not great for keyboard accessibility, which is something I want to come
+back to and fix, but it will have to work for now. Then I could easily style
+the whole page by using the sibling selector:
+
+```css
+#darkmode:checked ~ * {
+  --background: black;
+  --foreground: white;
+}
+```
+
+```tsx
+          <nav>
+            <NavLink href="/">Start</NavLink>
+            <NavLink href="/blog">Blog</NavLink>
+            <label htmlFor="darkmode">Darkmode</label>
+          </nav>
+```
+
+I also threw in some css transitions on the changing colors for good measure.
+[The source is available on github](https://github.com/iwikal/iwikal.net).
+It's not free software, at least not yet - I haven't figured out what kind of
+license I should use. I don't necessarily want to apply the same license to the
+code and the contents of my blog posts, so it will require some closer
+consideration. Maybe I'll keep it proprietary, but don't let that stop you from
+stealing ideas from the code. Not that there's a lot to it.
+
+For this project, I went with the low-tech solution of just styling things with
+regular old stylesheets, mostly selecting on element types, instead of using
+classnames for everything. It's been a positive experience so far, but I
+wouldn't be surprised if I decide to employ some other pattern down the road as
+the site continues to evolve. I've liked using css-in-js and sometimes
+[styled-components](https://styled-components.com) in the past, but I wanted to
+try something different this time. I think it encourages me to have more
+consistent styles, if I have to go through extra steps to make certain links
+look different than others.
+
+The code that generates the list of posts is interesting. Apparently, next.js
+has some kind of code transform that allows you to write server side code and
+client side code in the same file, without having to worry about what kinds of
+imports you're allowed to use where. To my surprise, it _just worked_. Let me
+show you:
+
+```tsx
+import { GetStaticPropsResult } from 'next'
+import { promisify } from 'util'
+import fs from 'fs'
+import path from 'path'
+import simpleGit from 'simple-git'
+import Link from 'next/link'
+
+interface Post {
+  date: string
+  slug: string
+  title: string
+}
+
+interface BlogProps {
+  posts: Post[]
+}
+
+export default function Blog({ posts }: BlogProps) {
+  return (
+    <>
+      <h1>A blog about my occasional forays into userland and webspace.</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.slug}>
+            <Link href={`/blog/${post.slug}`}>
+              {`${post.date.replace(/T.*/, '')} ${post.title}`}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}
+
+export async function getStaticProps(): Promise<
+  GetStaticPropsResult<BlogProps>
+> {
+  const git = simpleGit()
+  const postsDir = path.join(process.cwd(), 'pages/blog')
+  const filenames = await promisify(fs.readdir)(postsDir)
+
+  const readfile = promisify(fs.readFile)
+
+  async function postFromName(filename: string): Promise<Post> {
+    const file = path.join(postsDir, filename)
+    const datePromise = git.log({ file }).then((log) => {
+      switch (log.total) {
+        case 0:
+          return new Date().toISOString()
+        default:
+          return new Date(log.all[log.total - 1].date).toISOString()
+      }
+    })
+
+    const titlePromise = readfile(file, 'utf8').then((contents) => {
+      if (!contents) return 'This post is empty'
+
+      const lines = contents.split('\n')
+      const matches = lines.find((line) => line.match(/#[^#]/))
+      return matches.slice(1).trim()
+    })
+
+    return {
+      date: await datePromise,
+      slug: filename.replace('.mdx', ''),
+      title: await titlePromise,
+    }
+  }
+
+  const posts = await Promise.all(filenames.map(postFromName))
+  posts.sort((a, b) => b.date.localeCompare(a.date))
+
+  return { props: { posts } }
+}
+```
+
+See that big `async function getStaticProps`? It's server side code. And so is
+the component itself, when statically generating the site. But it also takes
+the component, strips it of any server side specific stuff, and puts it in the
+bundle of javascript that gets shipped to the client, so that it can client
+side render the page. It also ships the computed props in json form, which is
+why you're only allowed to put serializable things in there.
+
+This is how I'm able to just use the regular old node.js `fs` module to list
+the directory of blog posts, strip away the mdx extension, and use the
+filenames to generate links to the individual posts. I also use
+[simple-git](https://github.com/steveukx/git-js) to search the log for when I
+first commited the post, and grab the date. In case I haven't committed the
+post yet, I use today's date so that it doesn't crash while I'm writing the
+post. I'm not entirely convinced this very simplistic system won't cause issues
+down the line, but it works for now.
+
+That's all I can think of writing about this site, so it's time to get back to
+studying for physics finals. Wish me luck!
