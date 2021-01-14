@@ -6,9 +6,9 @@ import { MDXProvider } from '@mdx-js/react'
 
 const components = {
   code: (props: React.PropsWithChildren<{}>) => (
-    <code>
-      <blockquote {...props} />
-    </code>
+    <blockquote className="codeblock">
+      <code {...props} />
+    </blockquote>
   ),
   inlineCode: (props: React.PropsWithChildren<{}>) => (
     <code className="inline" {...props} />
