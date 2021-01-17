@@ -18,6 +18,7 @@ pre[class*="language-"] {
   color: var(--comment);
 }
 
+.language-tsx .token.tag > .token.script,
 .token.operator,
 .token.punctuation {
   transition: var(--color-transition);
