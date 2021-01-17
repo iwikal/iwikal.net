@@ -45,6 +45,7 @@ pre[class*="language-"] {
 .token.char,
 .token.url,
 .token.keyword.nil,
+.token.tag > .token.attr-value > .token.punctuation:not(.attr-equals),
 .token.inserted {
   color: var(--cyan);
 }
