@@ -1,0 +1,148 @@
+# I've got syntax highlighting now!
+
+It was easier than I thought it would be. All I did was search the web for "mdx
+syntax highlighting" and found [this helpful article in the mdxjs
+documentation](https://mdxjs.com/guides/syntax-highlighting).
+It lists two options:
+ - composition via the MDXProvider
+ - remark plugin
+
+They say it's "typically preferred to take the compositional approach". I don't
+know why. Maybe they assume that people expect it to dynamically update the
+highlighting if the code is changed on the client side. I don't need it to be
+doing any parsing on the client, so I went for the second option. I installed
+the plugin with `pnpm add @mapbox/rehype-prism` and added it to the mdx options
+parameter in my `next.config.js` file. This is what it looked like after:
+
+```javascript
+const path = require('path')
+const rehypePrism = require('@mapbox/rehype-prism')
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx?$/,
+  options: {
+    rehypePlugins: [rehypePrism],
+  },
+})
+module.exports = withMDX({
+  pageExtensions: ['mdx', 'tsx'],
+})
+```
+
+This should do all the expensive parsing while the markdown file is being
+loaded, and what we end up with is a javascript file that exports a React
+component, which contains all the stuff it did before like headings,
+paragraphs, etc. But when I insert a code snippet, it renders a `<pre>` tag
+with a whole bunch of `<span>`s in it, each with one or more css classes
+attached to it which lets me style them with a very sensible looking css file.
+I started by downloading [a css file from
+prismjs.com](https://prismjs.com/download.html) after selecting the languages I
+thought I would need, and modified it to my liking. Mostly I just replaced the
+hard-coded hex color codes with my variables. An excerpt:
+
+```css
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.namespace,
+.token.namespace > .token.punctuation,
+.token.cdata {
+  transition: var(--color-transition);
+  color: var(--comment);
+}
+
+.language-tsx .token.tag > .token.script,
+.token.operator,
+.token.punctuation {
+  transition: var(--color-transition);
+  color: var(--fg);
+}
+
+.token.class-name,
+.token.maybe-class-name,
+.token.function,
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: var(--blue);
+}
+
+.token.atrule,
+.token.keyword {
+  color: var(--green);
+}
+
+.token.builtin,
+.token.class-name.known-class-name,
+.token.attr-name {
+  color: var(--yellow);
+}
+
+/* I'm skipping a few rules here */
+
+.token.comment,
+.token.italic {
+  font-style: italic;
+}
+```
+
+General identifiers are not wrapped in spans, so they get the default color.
+One exception is, in jsx tags, I think it switches to a parser originally made
+for html, which would make sense, but when you have computed attributes with
+regular javascript (or typescript) code in them, the identifiers within turned
+blue because of the style applied to `.token.tag`.
+
+<pre>
+  <code>
+    <span className="token tag">
+      <span className="token punctuation">{'<'}</span>
+      Link <span className="token attr-name">href</span>
+      <span className="token punctuation">{'={'}</span>
+      props
+      <span className="token punctuation">.</span>
+      href
+      <span className="token punctuation">{'} />'}</span>
+    </span>
+  </code>
+</pre>
+
+I had to add a special case:
+`.language-tsx .token.tag > .token.script` should have the normal foreground
+color. I ended up adding a few more tweaks like that.
+
+```tsx
+<Link href={props.href} />
+```
+
+I have one gripe with the prism typescript parser that I didn't manage to solve
+though: while the javascript parser applies both a `keyword` and a `nil` class
+to `undefined` and `null` alike, allowing you to choose if you want to style it
+like other keywords or add a special style, their typescript parser doesn't for
+whatever reason. While they technically are keywords, I prefer to see them as
+literals and thus would like their color to be consistent with string, number,
+and boolean literals. There are already so many keywords in the code, we don't
+need two more of them.
+
+```javascript
+// javascript
+const a = undefined
+const b = null
+const c = false
+const d = ''
+```
+
+```typescript
+// typescript
+const a: undefined = undefined
+const b: null = null
+const c: boolean = false
+const d: string = ''
+```
+
+I also think it looks a bit strange when it highlights these keywords the same
+in type annotations as it does when they're in value position, but it's only a
+regex-based parser so I wasn't expecting miracles.
+
+Overall it was a pleasant experience to implement this. I give this solution an
+8/10 and would recommend.
