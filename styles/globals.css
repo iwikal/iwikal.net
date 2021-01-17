@@ -19,13 +19,13 @@
 
   --bg: var(--base3);
   --hl: var(--base2);
-  --fg: var(--base01);
-  --emph: var(--base02);
+  --fg: var(--base00);
+  --emph: var(--base01);
   --comment: var(--base1);
 
   --bgi: var(--base03);
-  --fgi: var(--base0);
   --hli: var(--base02);
+  --fgi: var(--base0);
   --emphi: var(--base1);
   --commenti: var(--base01);
 
@@ -62,15 +62,15 @@ label[for=darkmode]:active {
 
 #darkmode:checked ~ * {
   --bg: var(--base03);
-  --fg: var(--base0);
   --hl: var(--base02);
+  --fg: var(--base0);
   --emph: var(--base1);
   --comment: var(--base01);
 
   --bgi: var(--base3);
   --hli: var(--base2);
-  --fgi: var(--base01);
-  --emphi: var(--base02);
+  --fgi: var(--base00);
+  --emphi: var(--base01);
   --commenti: var(--base1);
 
   --accent: var(--cyan);

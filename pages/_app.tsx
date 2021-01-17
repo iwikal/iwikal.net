@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import NavLink from '../components/NavLink'
 import '../styles/globals.css'
+import '../styles/syntax.css'
 import { AppProps } from 'next/app'
 import { MDXProvider } from '@mdx-js/react'
 
