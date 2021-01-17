@@ -6,7 +6,6 @@ dependencies:
   next: 10.0.5_c39e9db791ea05e3ec4e0e74abb7a6b5
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
-  simple-git: 2.31.0
 devDependencies:
   '@types/node': 14.14.20
   '@types/react': 17.0.0
@@ -302,16 +301,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-CAEbWH7OIur6jEOzaai83jq3FmKmv4PmX1JYfs9IrYcGEVI/lyL1EXJGCj7eFVJ0bg5QR8LMxBlEtA+xKiLpFw==
-  /@kwsites/file-exists/1.1.1:
-    dependencies:
-      debug: 4.3.1
-    dev: false
-    resolution:
-      integrity: sha512-m9/5YGR18lIwxSFDwfE3oA7bWuq9kdau6ugN4H2rJeyhFQZcG9AgSHkQtSD15a8WvTgfz9aikZMrKPHvbpqFiw==
-  /@kwsites/promise-deferred/1.1.1:
-    dev: false
-    resolution:
-      integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
   /@mapbox/rehype-prism/0.5.0:
     dependencies:
       hast-util-to-string: 1.0.4
@@ -4034,14 +4023,6 @@ packages:
     optional: true
     resolution:
       integrity: sha512-ZalZGexYr3TA0SwySsr5HlgOOinS4Jsa8YB2GJ6lUNAazyAu4KG/VmzMTwAt2YVXzzVj8QmefmAonZIK2BSGcQ==
-  /simple-git/2.31.0:
-    dependencies:
-      '@kwsites/file-exists': 1.1.1
-      '@kwsites/promise-deferred': 1.1.1
-      debug: 4.3.1
-    dev: false
-    resolution:
-      integrity: sha512-/+rmE7dYZMbRAfEmn8EUIOwlM2G7UdzpkC60KF86YAfXGnmGtsPrKsym0hKvLBdFLLW019C+aZld1+6iIVy5xA==
   /simple-swizzle/0.2.2:
     dependencies:
       is-arrayish: 0.3.2
@@ -4888,5 +4869,4 @@ specifiers:
   next: 10.0.5
   react: 17.0.1
   react-dom: 17.0.1
-  simple-git: ^2.31.0
   typescript: ^4.1.3

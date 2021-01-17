@@ -2,7 +2,6 @@ import { GetStaticPropsResult } from 'next'
 import { promisify } from 'util'
 import fs from 'fs'
 import path from 'path'
-import simpleGit from 'simple-git'
 import Link from 'next/link'
 
 interface Post {
@@ -23,7 +22,7 @@ export default function Blog({ posts }: BlogProps) {
         {posts.map((post) => (
           <li key={post.slug}>
             <Link href={`/blog/${post.slug}`}>
-              {`${post.date.replace(/T.*/, '')} ${post.title}`}
+              {`${post.date} ${post.title}`}
             </Link>
           </li>
         ))}
@@ -35,7 +34,6 @@ export default function Blog({ posts }: BlogProps) {
 export async function getStaticProps(): Promise<
   GetStaticPropsResult<BlogProps>
 > {
-  const git = simpleGit()
   const postsDir = path.join(process.cwd(), 'pages/blog')
   const filenames = await promisify(fs.readdir)(postsDir)
 
@@ -43,27 +41,30 @@ export async function getStaticProps(): Promise<
 
   async function postFromName(filename: string): Promise<Post> {
     const file = path.join(postsDir, filename)
-    const datePromise = git.log({ file }).then((log) => {
-      switch (log.total) {
-        case 0:
-          return new Date().toISOString()
-        default:
-          return new Date(log.all[log.total - 1].date).toISOString()
-      }
-    })
 
-    const titlePromise = readfile(file, 'utf8').then((contents) => {
-      if (!contents) return 'This post is empty'
+    const contents = await readfile(file, 'utf8')
 
-      const lines = contents.split('\n')
-      const matches = lines.find((line) => line.match(/#[^#]/))
-      return matches.slice(1).trim()
-    })
+    if (!contents) {
+      throw new Error('empty blog post')
+    }
+
+    const [head, ...tail] = contents.split('\n')
+    const [date] = head.match(/\d\d\d\d-\d\d-\d\d/)
+    if (!date) {
+      throw new Error('first line must be a date')
+    }
+
+    const matches = tail.find((line) => line.match(/#[^#]/))
+    if (!matches) {
+      throw new Error('no title')
+    }
+
+    const title = matches.slice(1).trim()
 
     return {
-      date: await datePromise,
+      date,
+      title,
       slug: filename.replace('.mdx', ''),
-      title: await titlePromise,
     }
   }
 

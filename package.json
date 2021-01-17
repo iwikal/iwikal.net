@@ -14,8 +14,7 @@
     "@next/mdx": "^10.0.5",
     "next": "10.0.5",
     "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "simple-git": "^2.31.0"
+    "react-dom": "17.0.1"
   },
   "devDependencies": {
     "@types/node": "^14.14.20",
