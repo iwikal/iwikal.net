@@ -6,11 +6,12 @@ import { AppProps } from 'next/app'
 import { MDXProvider } from '@mdx-js/react'
 
 const components = {
-  code: (props: React.PropsWithChildren<{}>) => (
-    <blockquote className="codeblock">
-      <code {...props} />
-    </blockquote>
-  ),
+  pre: (
+    props: React.DetailedHTMLProps<
+      React.HTMLAttributes<HTMLPreElement>,
+      HTMLPreElement
+    >
+  ) => <pre {...props} className={[props.className, 'codeblock'].join(' ')} />,
   inlineCode: (props: React.PropsWithChildren<{}>) => (
     <code className="inline" {...props} />
   ),

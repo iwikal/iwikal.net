@@ -122,11 +122,11 @@ code.inline {
   border-radius: 5px;
 }
 
-blockquote.codeblock {
+pre.codeblock {
   max-width: 98vw;
   transition: var(--color-transition), var(--transition-style) border;
   border-left: 1ch solid var(--hl);
-  margin: 0 -1ch;
+  margin-left: -1ch;
   overflow-x: auto;
 }
 
