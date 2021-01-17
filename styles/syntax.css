@@ -23,9 +23,8 @@ pre[class*="language-"] {
   color: var(--fg);
 }
 
-.language-tsx .token.class-name,
-.language-tsx .token.maybe-class-name,
 .token.class-name,
+.token.maybe-class-name,
 .token.function,
 .token.property,
 .token.tag,
