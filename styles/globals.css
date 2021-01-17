@@ -32,7 +32,8 @@
   --accent: var(--yellow);
   --accenti: var(--cyan);
 
-  --color-transition: 200ms ease background, 200ms ease color;
+  --transition-style: 200ms ease;
+  --color-transition: var(--transition-style) background, var(--transition-style) color;
 }
 
 #darkmode {
@@ -81,7 +82,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: monospace;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   font-size: 18px;
 }
 
@@ -123,7 +124,7 @@ code.inline {
 
 blockquote.codeblock {
   max-width: 98vw;
-  transition: var(--color-transition);
+  transition: var(--color-transition), var(--transition-style) border;
   border-left: 1ch solid var(--hl);
   margin: 0 -1ch;
   overflow-x: auto;
