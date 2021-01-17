@@ -7,7 +7,6 @@ const withMDX = require('@next/mdx')({
   },
 })
 module.exports = withMDX({
-  include: path.resolve(__dirname, 'assets'),
   pageExtensions: ['mdx', 'tsx'],
   poweredByHeader: false,
 })
