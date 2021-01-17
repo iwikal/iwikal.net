@@ -14,14 +14,12 @@ pre[class*="language-"] {
 .token.namespace,
 .token.namespace > .token.punctuation,
 .token.cdata {
-  transition: var(--color-transition);
   color: var(--comment);
 }
 
 .language-tsx .token.tag > .token.script,
 .token.operator,
 .token.punctuation {
-  transition: var(--color-transition);
   color: var(--fg);
 }
 

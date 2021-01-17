@@ -36,12 +36,15 @@
   --color-transition: var(--transition-style) background, var(--transition-style) color;
 }
 
+:root * {
+  transition: var(--color-transition);
+}
+
 #darkmode {
   display: none;
 }
 
 label[for=darkmode] {
-  transition: var(--color-transition);
   background: var(--hl);
   user-select: none;
   cursor: pointer;
@@ -91,7 +94,6 @@ body {
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  transition: var(--color-transition);
   background: var(--bg);
   color: var(--fg);
 }
@@ -143,7 +145,6 @@ a:hover {
 }
 
 nav {
-  transition: var(--color-transition);
   background: var(--hl);
   color: var(--emph);
   display: flex;
@@ -152,7 +153,6 @@ nav {
 nav a {
   user-select: none;
   padding: 1em;
-  transition: var(--color-transition);
 }
 
 nav a:active {
@@ -169,5 +169,4 @@ nav a.current {
 footer {
   height: 3em;
   background: var(--hl);
-  transition: var(--color-transition);
 }
