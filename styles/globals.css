@@ -1,39 +1,56 @@
 :root {
-  --base03:  #002b36;
-  --base02:  #073642;
-  --base01:  #586e75;
-  --base00:  #657b83;
-  --base0:   #839496;
-  --base1:   #93a1a1;
-  --base2:   #eee8d5;
-  --base3:   #fdf6e3;
+  --bg:       #fbf3db;
+  --hl:       #ece3cc;
+  --fg:       #53676d;
+  --emph:     #3a4d53;
+  --comment:  #909995;
 
-  --yellow:  #b58900;
-  --orange:  #cb4b16;
-  --red:     #dc322f;
-  --magenta: #d33682;
-  --violet:  #6c71c4;
-  --blue:    #268bd2;
-  --cyan:    #2aa198;
-  --green:   #859900;
+  --bgi:       #103c48;
+  --hli:       #184956;
+  --fgi:       #adbcbc;
+  --emphi:     #cad8d9;
+  --commenti:  #72898f;
 
-  --bg: var(--base3);
-  --hl: var(--base2);
-  --fg: var(--base00);
-  --emph: var(--base01);
-  --comment: var(--base1);
-
-  --bgi: var(--base03);
-  --hli: var(--base02);
-  --fgi: var(--base0);
-  --emphi: var(--base1);
-  --commenti: var(--base01);
+  --red:      #d2212d;
+  --green:    #489100;
+  --yellow:   #ad8900;
+  --blue:     #0072d4;
+  --magenta:  #ca4898;
+  --cyan:     #009c8f;
+  --orange:   #c25d1e;
+  --violet:   #8762c6;
 
   --accent: var(--yellow);
   --accenti: var(--cyan);
 
   --transition-style: 200ms ease;
   --color-transition: var(--transition-style) background, var(--transition-style) color;
+}
+
+#darkmode:checked ~ * {
+  --bg:       #103c48;
+  --hl:       #184956;
+  --fg:       #adbcbc;
+  --emph:     #cad8d9;
+  --comment:  #72898f;
+
+  --bgi:      #fbf3db;
+  --hli:      #ece3cc;
+  --fgi:      #53676d;
+  --emphi:    #3a4d53;
+  --commenti: #909995;
+
+  --red:      #fa5750;
+  --green:    #75b938;
+  --yellow:   #dbb32d;
+  --blue:     #4695f7;
+  --magenta:  #f275be;
+  --cyan:     #41c7b9;
+  --orange:   #ed8649;
+  --violet:   #af88eb;
+
+  --accent: var(--cyan);
+  --accenti: var(--yellow);
 }
 
 :root * {
@@ -62,23 +79,6 @@ label[for=darkmode]:hover {
 label[for=darkmode]:active {
   background: var(--bgi);
   color: var(--accenti);
-}
-
-#darkmode:checked ~ * {
-  --bg: var(--base03);
-  --hl: var(--base02);
-  --fg: var(--base0);
-  --emph: var(--base1);
-  --comment: var(--base01);
-
-  --bgi: var(--base3);
-  --hli: var(--base2);
-  --fgi: var(--base00);
-  --emphi: var(--base01);
-  --commenti: var(--base1);
-
-  --accent: var(--cyan);
-  --accenti: var(--yellow);
 }
 
 html,
