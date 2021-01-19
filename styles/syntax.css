@@ -23,10 +23,10 @@ pre[class*="language-"] {
   color: var(--fg);
 }
 
+.token.class,
 .token.class-name,
 .token.maybe-class-name,
 .token.function,
-.token.property,
 .token.tag,
 .token.constant,
 .token.symbol,
@@ -34,10 +34,10 @@ pre[class*="language-"] {
   color: var(--blue);
 }
 
+.token.id,
 .token.boolean,
 .token.number,
 .token.attr-value,
-.token.selector,
 .token.string,
 .token.char,
 .token.url,
@@ -47,33 +47,39 @@ pre[class*="language-"] {
   color: var(--cyan);
 }
 
+.token.combinator,
+.token.variable,
 .token.interpolation-punctuation,
 .token.entity {
   color: var(--red);
 }
 
+.token.selector,
 .token.atrule,
 .token.keyword {
   color: var(--green);
 }
 
+.token.property,
 .token.builtin,
 .token.class-name.known-class-name,
 .token.attr-name {
   color: var(--yellow);
 }
 
+.token.pseudo-class,
 .token.attribute,
 .token.regex,
-.token.important,
-.token.variable {
+.token.important {
   color: var(--orange);
 }
 
+.token.combinator,
 .token.important,
 .token.bold {
   font-weight: bold;
 }
+
 .token.comment,
 .token.italic {
   font-style: italic;
