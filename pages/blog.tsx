@@ -14,19 +14,23 @@ interface BlogProps {
   posts: Post[]
 }
 
+function PostItem(props: Post) {
+  return (
+    <div className="post">
+      <time dateTime={props.date}>{props.date}</time>
+      {' '}
+      <Link href={`/blog/${props.slug}`}>{props.title}</Link>
+    </div>
+  )
+}
+
 export default function Blog({ posts }: BlogProps) {
   return (
     <>
       <h1>A blog about my occasional forays into userland and webspace.</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.slug}>
-            <Link href={`/blog/${post.slug}`}>
-              {`${post.date} ${post.title}`}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <div className="posts-list">
+        {posts.map((post) => <PostItem key={post.slug} {...post} />)}
+      </div>
     </>
   )
 }

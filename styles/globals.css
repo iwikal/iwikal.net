@@ -170,3 +170,14 @@ footer {
   height: 3em;
   background: var(--hl);
 }
+
+.post time {
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.posts-list .post:focus-within,
+.posts-list .post:hover {
+  transition-duration: 100ms;
+  background: var(--hl);
+}

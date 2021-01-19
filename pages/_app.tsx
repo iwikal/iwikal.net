@@ -5,7 +5,12 @@ import '../styles/syntax.css'
 import { AppProps } from 'next/app'
 import { MDXProvider } from '@mdx-js/react'
 
+function Date({ iso }: { iso: string }) {
+  return <time dateTime={iso}>{iso}</time>
+}
+
 const components = {
+  Date,
   pre: (
     props: React.DetailedHTMLProps<
       React.HTMLAttributes<HTMLPreElement>,
