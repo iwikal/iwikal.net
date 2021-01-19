@@ -20,9 +20,10 @@ const components = {
   inlineCode: (props: React.PropsWithChildren<{}>) => (
     <code className="inline" {...props} />
   ),
+  wrapper: (props: React.PropsWithChildren<{}>) => <article {...props} />,
 }
 
-function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
@@ -47,5 +48,3 @@ function App({ Component, pageProps }: AppProps) {
     </>
   )
 }
-
-export default App
